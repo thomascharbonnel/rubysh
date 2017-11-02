@@ -12,5 +12,7 @@ loop do
     STDERR.puts e.message
   rescue SyntaxError => e
     STDERR.puts e.message
+  rescue LoadError => e
+    STDERR.puts e.message
   end
 end
