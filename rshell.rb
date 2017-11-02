@@ -7,7 +7,7 @@ loop do
 
     exit(0) if %w(exit quit).include? command
 
-    eval command
+    puts eval command
   rescue => e
     STDERR.puts e.message
   rescue SyntaxError => e
