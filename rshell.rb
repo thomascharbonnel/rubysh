@@ -4,6 +4,7 @@ require "readline"
 
 class Shell
   EXCEPTIONS_TO_CATCH = [ScriptError, StandardError]
+  EXCEPTIONS_EXIT = [Interrupt]
 
   def self.loop
     begin
@@ -14,6 +15,9 @@ class Shell
       puts eval line
     rescue *EXCEPTIONS_TO_CATCH => e
       STDERR.puts e.message
+    rescue *EXCEPTIONS_EXIT => e
+      STDERR.puts "Unexpected interruption."
+      exit(1)
     end
   end
 end
