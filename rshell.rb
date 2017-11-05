@@ -1,18 +1,26 @@
 #!/usr/bin/env ruby
 
-loop do
-  begin
-    print "> "
-    command = gets.chomp
+class Shell
+  EXCEPTIONS_TO_CATCH = [ScriptError, StandardError]
 
-    exit(0) if %w(exit quit).include? command
+  def self.loop
+    begin
+      print "> "
+      command = gets.chomp
 
-    puts eval command
-  rescue => e
-    STDERR.puts e.message
-  rescue SyntaxError => e
-    STDERR.puts e.message
-  rescue LoadError => e
-    STDERR.puts e.message
+      exit(0) if %w(exit quit).include? command
+
+      puts eval command
+    rescue *EXCEPTIONS_TO_CATCH => e
+      STDERR.puts e.message
+    end
   end
+end
+
+at_exit do
+  # do_something
+end
+
+loop do
+  Shell.loop
 end
