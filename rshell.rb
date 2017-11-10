@@ -13,6 +13,7 @@ module Rubysh
         line = Readline.readline("#{Builtin.pwd}> ", true)
 
         exit(0) if %w(exit quit).include? line || line.nil?
+        return if line.empty?
 
         command, *args = line.split
         if Builtin.respond_to?(command)
@@ -67,3 +68,4 @@ module Rubysh
     Shell.loop
   end
 end
+
